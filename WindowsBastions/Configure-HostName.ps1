@@ -17,18 +17,20 @@ try {
     $ErrorActionPreference = "Stop"
 
     # Get zone
-    $zone = Invoke-RestMethod http://169.254.169.254/latest/meta-data/placement/availability-zone
+    $Zone = Invoke-RestMethod http://169.254.169.254/latest/meta-data/placement/availability-zone
 
     # Append HostName Instance and Zone Code
-    if ($zone -eq $ZoneA) {
-        $hostname = $HostNamePrefix + "01a"
+    if ($Zone -eq $ZoneA) {
+        $HostName = $HostNamePrefix + "01a"
     }
     else {
-        $hostname = $HostNamePrefix + "01b"
+        $HostName = $HostNamePrefix + "01b"
     }
 
     # Associate Public Address
-    Rename-Computer -NewName $hostname -Restart
+    Write-Host
+    Write-Host "$(Get-Date -format 'yyyy-MM-dd HH:mm:ss,fff') [DEBUG] Renaming Computer to $HostName"
+    Rename-Computer -NewName $HostName -Restart
 }
 catch {
     Write-Verbose "$($_.exception.message)@ $(Get-Date)"

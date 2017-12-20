@@ -5,6 +5,9 @@ param (
     $DNSServerAddress
 )
 
+Write-Host
+Write-Host "$(Get-Date -format 'yyyy-MM-dd HH:mm:ss,fff') [DEBUG] Configuring Static Private Address"
+
 if (!$DNSServerAddress) {
     $DNSServerAddress = (Get-NetIPConfiguration).DNSServer.ServerAddresses
 }

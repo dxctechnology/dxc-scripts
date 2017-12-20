@@ -17,6 +17,9 @@ param (
     $EIPAllocationB
 )
 
+Write-Host
+Write-Host "$(Get-Date -format 'yyyy-MM-dd HH:mm:ss,fff') [DEBUG] Configuring Static Public Address"
+
 try {
     $ErrorActionPreference = "Stop"
 

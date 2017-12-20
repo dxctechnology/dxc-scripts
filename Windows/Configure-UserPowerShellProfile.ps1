@@ -1,17 +1,27 @@
-#
-# Configures the specified user's PowerShell profile
-# - Located here:
-#   C:\Users\$User\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
-#
-
+<#
+.Synopsis
+Configures the specified user's PowerShell profile
+.Description
+Configures the specified user's PowerShell profile, located here:
+C:\Users\$UserName\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+.Parameter UserName
+The UserName to configure. Defaults to the current user.
+.Notes
+    Author: Michael Crawford
+ Copyright: 2017 by DXC.technology
+          : Permission to use is granted but attribution is appreciated
+#>
 [CmdletBinding()]
 param (
     [string]
-    [Parameter(Position=0, Mandatory=$true)]
-    $User
+    [Parameter(Position=0, Mandatory=$false)]
+    $UserName = $env:UserName
 )
 
-New-Item C:\Users\$User\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 -ItemType file -Force
+Write-Host
+Write-Host "$(Get-Date -format 'yyyy-MM-dd HH:mm:ss,fff') [DEBUG] Configuring Windows PowerShell Profile for $($UserName)"
+
+New-Item C:\Users\$UserName\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 -ItemType file -Force
 
 @'
 Set-Location C:\
@@ -24,7 +34,7 @@ $size.height=32
 $Shell.WindowSize = $size
 
 $size = $Shell.BufferSize
-$size.width=120
+$size.width=256
 $size.height=2000
 $Shell.BufferSize = $size
 
@@ -42,4 +52,4 @@ $Host.PrivateData.ProgressForegroundColor = 'DarkCyan'
 $Host.PrivateData.ProgressBackgroundColor = $background
 
 Clear-Host
-'@ | Out-File -FilePath C:\Users\$User\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 -Append -Encoding ASCII
+'@ | Out-File -FilePath C:\Users\$UserName\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 -Append -Encoding ASCII

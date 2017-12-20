@@ -21,6 +21,9 @@ param (
     $NetBIOSDomain
 )
 
+Write-Host
+Write-Host "$(Get-Date -format 'yyyy-MM-dd HH:mm:ss,fff') [DEBUG] Updating DNS Servers"
+
 $DomainControllerBPrivateIP = Invoke-RestMethod http://169.254.169.254/latest/meta-data/local-ipv4
 
 # Locally update DomainControllerB DNS Servers
